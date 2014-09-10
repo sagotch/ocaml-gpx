@@ -7,7 +7,9 @@
 
 (** metadata and extensions are represented as Xml.xml. *)
 
-type gpx = {
+type xml = Xml.xml
+
+ and gpx = {
   version: float; (* Must be 1.1 *)
   creator: string;
   metadata: metadata option;
@@ -50,7 +52,7 @@ type gpx = {
    pdop: float option;
    ageofdgpsdata: float option;
    dgpsid: dgps_station option;
-   extension: extension option;
+   extensions: extension option;
  }
 
  and rte = {
@@ -137,3 +139,6 @@ type gpx = {
  and timezone = TIMEZONE_Z
               | TIMEZONE_plus of int * int
               | TIMEZONE_minus of int * int
+
+val of_xml : xml -> gpx
+val to_xml : gpx -> xml

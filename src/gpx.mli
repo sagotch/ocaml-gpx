@@ -83,7 +83,7 @@ type xml = Xml.xml
 
  and trkseg = {
    trkpt: wpt list;
-   extentions: extension option;
+   extensions: extension option;
  }
 
  and copyright = {

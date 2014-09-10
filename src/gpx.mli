@@ -7,9 +7,7 @@
 
 (** metadata and extensions are represented as Xml.xml. *)
 
-type xml = Xml.xml
-
- and gpx = {
+type gpx = {
   version: float; (* Must be 1.1 *)
   creator: string;
   metadata: metadata option;
@@ -140,5 +138,5 @@ type xml = Xml.xml
               | TIMEZONE_plus of int * int
               | TIMEZONE_minus of int * int
 
-val of_xml : xml -> gpx
-val to_xml : gpx -> xml
+val of_xml : Xml.xml -> gpx
+val to_xml : gpx -> Xml.xml

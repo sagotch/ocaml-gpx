@@ -177,12 +177,6 @@ let time_of_string s : date_time =
          timezone = None }
   else failwith "Invalid date format"
 
-let latitude_of_string = float_of_string
-
-let longitude_of_string = float_of_string
-
-let degrees_of_string = float_of_string
-
 let fix_of_string = function
   | "none" -> FIX_none
   | "2d"   -> FIX_2d
@@ -198,11 +192,11 @@ let link xml = {
 
 let wpt xml =
   {
-    lat           = attrib xml "lat" |> latitude_of_string;
-    lon           = attrib xml "lon" |> longitude_of_string;
+    lat           = attrib xml "lat" |> float_of_string;
+    lon           = attrib xml "lon" |> float_of_string;
     time          = opt_pcdata xml "time" |> opt_apply time_of_string;
     ele           = opt_float xml "ele";
-    magvar        = opt_pcdata xml "magvar" |> opt_apply degrees_of_string;
+    magvar        = opt_pcdata xml "magvar" |> opt_apply float_of_string;
     geoidheight   = opt_float xml "geoidheight";
     name          = opt_string xml "name";
     cmt           = opt_string xml "cmt";
@@ -268,10 +262,10 @@ let copyright xml = {
 }
 
 let bounds xml = {
-  minlat = attrib xml "minlat" |> latitude_of_string;
-  minlon = attrib xml "minlon" |> longitude_of_string;
-  maxlat = attrib xml "maxlat" |> latitude_of_string;
-  maxlon = attrib xml "maxlon" |> longitude_of_string;
+  minlat = attrib xml "minlat" |> float_of_string;
+  minlon = attrib xml "minlon" |> float_of_string;
+  maxlat = attrib xml "maxlat" |> float_of_string;
+  maxlon = attrib xml "maxlon" |> float_of_string;
 }
 
 let metadata xml = {

@@ -184,46 +184,46 @@ let fix_of_string = function
   | "pps"  -> FIX_pps
 
 let link xml = {
-    href = attrib xml "href";
-    text = opt_string xml "text";
-    typ  = opt_string xml "type";
+  href = attrib xml "href";
+  text = opt_string xml "text";
+  typ  = opt_string xml "type";
 }
 
 let wpt xml = {
-    lat           = attrib xml "lat" |> float_of_string;
-    lon           = attrib xml "lon" |> float_of_string;
-    time          = opt_pcdata xml "time" |> opt_apply time_of_string;
-    ele           = opt_float xml "ele";
-    magvar        = opt_pcdata xml "magvar" |> opt_apply float_of_string;
-    geoidheight   = opt_float xml "geoidheight";
-    name          = opt_string xml "name";
-    cmt           = opt_string xml "cmt";
-    desc          = opt_string xml "desc";
-    src           = opt_string xml "src";
-    link          = List.map link (list xml "link");
-    sym           = opt_string xml "sym";
-    typ           = opt_string xml "type";
-    fix           = opt_pcdata xml "fix" |> opt_apply fix_of_string;
-    sat           = opt_int xml "sat";
-    vdop          = opt_float xml "vdop";
-    hdop          = opt_float xml "hdop";
-    pdop          = opt_float xml "pdop";
-    ageofdgpsdata = opt_float xml "ageofdgpsdata";
-    dgpsid        = opt_int xml "dgpsid";
-    extensions    = opt_child xml "extensions";
-  }
+  lat           = attrib xml "lat" |> float_of_string;
+  lon           = attrib xml "lon" |> float_of_string;
+  time          = opt_pcdata xml "time" |> opt_apply time_of_string;
+  ele           = opt_float xml "ele";
+  magvar        = opt_pcdata xml "magvar" |> opt_apply float_of_string;
+  geoidheight   = opt_float xml "geoidheight";
+  name          = opt_string xml "name";
+  cmt           = opt_string xml "cmt";
+  desc          = opt_string xml "desc";
+  src           = opt_string xml "src";
+  link          = List.map link (list xml "link");
+  sym           = opt_string xml "sym";
+  typ           = opt_string xml "type";
+  fix           = opt_pcdata xml "fix" |> opt_apply fix_of_string;
+  sat           = opt_int xml "sat";
+  vdop          = opt_float xml "vdop";
+  hdop          = opt_float xml "hdop";
+  pdop          = opt_float xml "pdop";
+  ageofdgpsdata = opt_float xml "ageofdgpsdata";
+  dgpsid        = opt_int xml "dgpsid";
+  extensions    = opt_child xml "extensions";
+}
 
 let rte xml = {
-    name       = opt_string xml "name";
-    cmt        = opt_string xml "cmt";
-    desc       = opt_string xml "desc";
-    src        = opt_string xml "src";
-    link       = List.map link (list xml "link");
-    number     = opt_int xml "number";
-    typ        = opt_string xml "type";
-    extensions = opt_child xml "extensions";
-    rtept      = List.map wpt (list xml "rtept");
-  }
+  name       = opt_string xml "name";
+  cmt        = opt_string xml "cmt";
+  desc       = opt_string xml "desc";
+  src        = opt_string xml "src";
+  link       = List.map link (list xml "link");
+  number     = opt_int xml "number";
+  typ        = opt_string xml "type";
+  extensions = opt_child xml "extensions";
+  rtept      = List.map wpt (list xml "rtept");
+}
 
 let trkseg xml = {
   trkpt      = List.map wpt (list xml "trkpt");
@@ -248,9 +248,9 @@ let email xml = {
 }
 
 let person xml = {
-   name  = opt_string xml "name";
-   email = opt_child xml "email" |> opt_apply email;
-   link  = opt_child xml "link" |> opt_apply link;
+  name  = opt_string xml "name";
+  email = opt_child xml "email" |> opt_apply email;
+  link  = opt_child xml "link" |> opt_apply link;
 }
 
 let copyright xml = {
@@ -279,14 +279,14 @@ let metadata xml = {
 }
 
 let gpx xml = {
-    version    = attrib xml "version" |> float_of_string;
-    creator    = attrib xml "creator";
-    metadata   = opt_child xml "metadata" |> opt_apply metadata;
-    wpt        = List.map wpt (list xml "wpt");
-    rte        = List.map rte (list xml "rte");
-    trk        = List.map trk (list xml "trk");
-    extensions = opt_child xml "extensions";
-  }
+  version    = attrib xml "version" |> float_of_string;
+  creator    = attrib xml "creator";
+  metadata   = opt_child xml "metadata" |> opt_apply metadata;
+  wpt        = List.map wpt (list xml "wpt");
+  rte        = List.map rte (list xml "rte");
+  trk        = List.map trk (list xml "trk");
+  extensions = opt_child xml "extensions";
+}
 
 let of_xml = gpx
 
@@ -426,7 +426,7 @@ let xml_of_metadata (x : metadata) : Xml.xml =
                @@@ opt_apply xml_of_copyright x.copyright
                @@@ List.map xml_of_link x.link
                @ opt_apply
-                     (fun x -> wrap_string "time" (string_of_date_time x)) x.time
+                   (fun x -> wrap_string "time" (string_of_date_time x)) x.time
                @@@ opt_apply (wrap_string "keywords") x.keywords
                @@@ opt_apply xml_of_bounds x.bounds
                @@@ x.extensions

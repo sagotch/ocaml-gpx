@@ -151,8 +151,7 @@ let opt_int xml tag =
   opt_pcdata xml tag |> opt_apply int_of_string
 
 let list xml tag =
-  try List.find (fun x -> Xml.tag x = tag) (Xml.children xml)
-      |> Xml.children
+  try List.find_all (fun x -> Xml.tag x = tag) (Xml.children xml)
   with Not_found -> []
 
 let time_of_string s : date_time =
@@ -190,8 +189,7 @@ let link xml = {
     typ  = opt_string xml "type";
 }
 
-let wpt xml =
-  {
+let wpt xml = {
     lat           = attrib xml "lat" |> float_of_string;
     lon           = attrib xml "lon" |> float_of_string;
     time          = opt_pcdata xml "time" |> opt_apply time_of_string;
@@ -321,10 +319,6 @@ let wrap_float = fun tag float ->
 let wrap_string = fun tag string ->
   Xml.Element (tag, [], [Xml.PCData string])
 
-let wrap_list tag attributes = function
-  | [] -> None
-  | children -> Some (Xml.Element (tag, attributes, children))
-
 let xml_of_email x : Xml.xml = assert false
 
 let xml_of_link x : Xml.xml =
@@ -335,7 +329,7 @@ let xml_of_link x : Xml.xml =
                @@@ [])
 
 let xml_of_wpt (x : wpt) : Xml.xml =
-  Xml.Element ("rte",
+  Xml.Element ("wpt",
                [ ("lat", string_of_float x.lat) ;
                  ("lon", string_of_float x.lon) ],
                opt_apply (fun x -> wrap_string "time" (string_of_date_time x))
@@ -347,8 +341,8 @@ let xml_of_wpt (x : wpt) : Xml.xml =
                @@@ opt_apply (wrap_string "cmt") x.cmt
                @@@ opt_apply (wrap_string "desc") x.desc
                @@@ opt_apply (wrap_string "src") x.src
-               @@@ wrap_list "link" [] (List.map xml_of_link x.link)
-               @@@ opt_apply (wrap_string "sym") x.sym
+               @@@ List.map xml_of_link x.link
+               @ opt_apply (wrap_string "sym") x.sym
                @@@ opt_apply (wrap_string "typ") x.typ
                @@@ opt_apply (fun x -> wrap_string "fix" (string_of_fix x))
                              x.fix
@@ -361,11 +355,15 @@ let xml_of_wpt (x : wpt) : Xml.xml =
                @@@ x.extensions
                @@@ [])
 
+let xml_of_rtept x =
+  let Xml.Element (_, attributes, children) = xml_of_wpt x in
+  Xml.Element ("rtept", attributes, children)
+
 let xml_of_trkseg (x : trkseg) : Xml.xml =
   Xml.Element ("bounds",
                [],
-               wrap_list "trkpt" [] (List.map xml_of_wpt x.trkpt)
-               @@@ x.extensions
+               List.map xml_of_wpt x.trkpt
+               @ x.extensions
                @@@ [])
 
 let xml_of_bounds (x : bounds) : Xml.xml =
@@ -398,13 +396,12 @@ let xml_of_rte (x : rte) : Xml.xml =
                @@@ opt_apply (wrap_string "cmt") x.cmt
                @@@ opt_apply (wrap_string "desc") x.desc
                @@@ opt_apply (wrap_string "src") x.src
-               @@@ wrap_list "link" [] (List.map xml_of_link x.link)
-               @@@ opt_apply (wrap_int "number") x.number
+               @@@ List.map xml_of_link x.link
+               @ opt_apply (wrap_int "number") x.number
                @@@ opt_apply (wrap_string "type") x.typ
                @@@ x.extensions
-               @@@ wrap_list "rtept" [] (List.map xml_of_wpt x.rtept)
-               @@@ [])
-
+               @@@ List.map xml_of_rtept x.rtept
+               @ [])
 
 let xml_of_trk (x : trk) : Xml.xml =
   Xml.Element ("trk",
@@ -413,12 +410,12 @@ let xml_of_trk (x : trk) : Xml.xml =
                @@@ opt_apply (wrap_string "cmt") x.cmt
                @@@ opt_apply (wrap_string "desc") x.desc
                @@@ opt_apply (wrap_string "src") x.src
-               @@@ wrap_list "link" [] (List.map xml_of_link x.link)
-               @@@ opt_apply (wrap_int "number") x.number
+               @@@ List.map xml_of_link x.link
+               @ opt_apply (wrap_int "number") x.number
                @@@ opt_apply (wrap_string "type") x.typ
                @@@ x.extensions
-               @@@ wrap_list "trkseg" [] (List.map xml_of_trkseg x.trkseg)
-               @@@ [])
+               @@@ List.map xml_of_trkseg x.trkseg
+               @ [])
 
 let xml_of_metadata (x : metadata) : Xml.xml =
   Xml.Element ("metadata",
@@ -427,8 +424,8 @@ let xml_of_metadata (x : metadata) : Xml.xml =
                @@@ opt_apply (wrap_string "desc") x.desc
                @@@ opt_apply xml_of_author x.author
                @@@ opt_apply xml_of_copyright x.copyright
-               @@@ wrap_list "link" [] (List.map xml_of_link x.link)
-               @@@ opt_apply
+               @@@ List.map xml_of_link x.link
+               @ opt_apply
                      (fun x -> wrap_string "time" (string_of_date_time x)) x.time
                @@@ opt_apply (wrap_string "keywords") x.keywords
                @@@ opt_apply xml_of_bounds x.bounds
@@ -440,10 +437,10 @@ let xml_of_gpx x =
                [("version", string_of_float x.version);
                 ("creator", x.creator)],
                opt_apply xml_of_metadata x.metadata
-               @@@ wrap_list "wpt" [] (List.map xml_of_wpt x.wpt)
-               @@@ wrap_list "rte" [] (List.map xml_of_rte x.rte)
-               @@@ wrap_list "trk" [] (List.map xml_of_trk x.trk)
-               @@@ x.extensions
+               @@@ List.map xml_of_wpt x.wpt
+               @ List.map xml_of_rte x.rte
+               @ List.map xml_of_trk x.trk
+               @ x.extensions
                @@@ [])
 
 let to_xml = xml_of_gpx

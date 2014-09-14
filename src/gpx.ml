@@ -158,7 +158,7 @@ let time_of_string s : date_time =
   let num = "[0-9]" in
   let grp s = "\\(" ^ s ^ "\\)" in
   (* FIXME: does not support float for seconds, nor timezone *)
-  let r = grp ("-?"^num^num^num^num^"*") (* grp 1: yyyy *)
+  let r = grp ("-?"^num^num^num^num^"+") (* grp 1: yyyy *)
           ^ "-" ^ grp (num ^ num)        (* grp 2: mm *)
           ^ "-" ^ grp (num ^ num)        (* grp 3: dd *)
           ^ "T" ^ grp (num ^ num)        (* grp 4: hh *)

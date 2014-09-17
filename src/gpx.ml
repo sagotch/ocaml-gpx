@@ -129,6 +129,8 @@ type gpx = {
               | TIMEZONE_plus of int * int
               | TIMEZONE_minus of int * int
 
+let warning w = print_endline ("WARNING: " ^ w)
+
 let attrib = Xml.attrib
 
 let opt_apply f = function None -> None | Some x -> Some (f x)
@@ -154,27 +156,36 @@ let list xml tag =
   try List.find_all (fun x -> Xml.tag x = tag) (Xml.children xml)
   with Not_found -> []
 
+let timezone_of_string = function
+  | "Z" -> TIMEZONE_Z
+  | s -> let r = Str.regexp "\\([+-]\\)\\([0-9][0-9]\\):\\([0-9][0-9]\\)" in
+         assert (Str.string_match r s 0);
+         let hh = Str.matched_group 2 s |> int_of_string in
+         let mm = Str.matched_group 3 s |> int_of_string in
+         if Str.matched_group 1 s = "+"
+         then TIMEZONE_plus (hh, mm)
+         else TIMEZONE_minus (hh, mm)
+
 let time_of_string s : date_time =
   let num = "[0-9]" in
   let grp s = "\\(" ^ s ^ "\\)" in
-  (* FIXME: does not support float for seconds, nor timezone *)
-  let r = grp ("-?"^num^num^num^num^"+") (* grp 1: yyyy *)
-          ^ "-" ^ grp (num ^ num)        (* grp 2: mm *)
-          ^ "-" ^ grp (num ^ num)        (* grp 3: dd *)
-          ^ "T" ^ grp (num ^ num)        (* grp 4: hh *)
-          ^ ":" ^ grp (num ^ num)        (* grp 5: mm *)
-          ^ ":" ^ grp (num ^ num)        (* grp 6: ss *)
-          ^ ".*"
+  let r = grp ("-?" ^ num ^ num ^ num ^ num ^ "+")              (* 1     *)
+          ^ "-" ^ grp (num ^ num)                               (* 2     *)
+          ^ "-" ^ grp (num ^ num)                               (* 3     *)
+          ^ "T" ^ grp (num ^ num)                               (* 4     *)
+          ^ ":" ^ grp (num ^ num)                               (* 5     *)
+          ^ ":" ^ grp (num ^ num ^ grp ("." ^ num ^ num) ^ "?") (* 6 (7) *)
+          ^ "\\(.+\\)"                                          (* 8     *)
           |> Str.regexp in
-  if Str.string_match r s 0
-  then { year     = int_of_string (Str.matched_group 1 s);
-         month    = int_of_string (Str.matched_group 2 s);
-         day      = int_of_string (Str.matched_group 3 s);
-         hour     = int_of_string (Str.matched_group 4 s);
-         minute   = int_of_string (Str.matched_group 5 s);
-         second   = float_of_string (Str.matched_group 6 s);
-         timezone = None }
-  else failwith "Invalid date format"
+  assert (Str.string_match r s 0);
+  { year     = int_of_string (Str.matched_group 1 s);
+    month    = int_of_string (Str.matched_group 2 s);
+    day      = int_of_string (Str.matched_group 3 s);
+    hour     = int_of_string (Str.matched_group 4 s);
+    minute   = int_of_string (Str.matched_group 5 s);
+    second   = float_of_string (Str.matched_group 6 s);
+    timezone = try Some (timezone_of_string (Str.matched_group 8 s))
+               with Not_found -> None }
 
 let fix_of_string = function
   | "none" -> FIX_none

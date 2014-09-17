@@ -371,7 +371,7 @@ let xml_of_rtept x =
   Xml.Element ("rtept", attributes, children)
 
 let xml_of_trkseg (x : trkseg) : Xml.xml =
-  Xml.Element ("bounds",
+  Xml.Element ("trkseg",
                [],
                List.map xml_of_wpt x.trkpt
                @ x.extensions

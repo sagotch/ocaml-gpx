@@ -1,2 +1,4 @@
 (test
- (name test_gpx))
+ (name test_gpx)
+ (deps samples/route.gpx samples/track.gpx samples/waypoints.gpx)
+ (libraries gpx xml-light))

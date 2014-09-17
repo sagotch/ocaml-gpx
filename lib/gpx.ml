@@ -371,7 +371,11 @@ module To_XML = struct
   let gpx x =
     Xml.Element
       ( "gpx",
-        [ ("version", x.version); ("creator", x.creator) ],
+        [
+          ("xmlns", "http://www.topografix.com/GPX/1/1");
+          ("version", x.version);
+          ("creator", x.creator);
+        ],
         opt_apply metadata x.metadata
         @@@ List.map wpt x.wpt @ List.map rte x.rte @ List.map trk x.trk
         @ x.extensions @@@ [] )

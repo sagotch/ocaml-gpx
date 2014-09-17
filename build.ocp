@@ -1,9 +1,3 @@
-begin library "gpx"
-  dirname += ["src"]
-  files = ["gpx.ml"]
-  requires = ["str" ; "xml-light"]
-end
-
 begin program "test"
   dirname += ["test"]
   files = ["test.ml"]

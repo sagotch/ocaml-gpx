@@ -317,7 +317,7 @@ let string_of_date_time (x : date_time) : string =
                 | TIMEZONE_Z            -> "Z"
                 | TIMEZONE_plus (h, m)  -> Printf.sprintf "+%02d:%02d" h m
                 | TIMEZONE_minus (h, m) -> Printf.sprintf "-%02d:%02d" h m in
-  Printf.sprintf "%04d-%02d-%02dT%02d-%02d-%02f%s"
+  Printf.sprintf "%04d-%02d-%02dT%02d:%02d:%02.2f%s"
                  x.year x.month x.day x.hour x.minute x.second
                  (string_of_timezone_opt x.timezone)
 
@@ -370,10 +370,14 @@ let xml_of_rtept x =
   let Xml.Element (_, attributes, children) = xml_of_wpt x in
   Xml.Element ("rtept", attributes, children)
 
+let xml_of_trkpt x =
+  let Xml.Element (_, attributes, children) = xml_of_wpt x in
+  Xml.Element ("trkpt", attributes, children)
+
 let xml_of_trkseg (x : trkseg) : Xml.xml =
-  Xml.Element ("bounds",
+  Xml.Element ("trkseg",
                [],
-               List.map xml_of_wpt x.trkpt
+               List.map xml_of_trkpt x.trkpt
                @ x.extensions
                @@@ [])
 

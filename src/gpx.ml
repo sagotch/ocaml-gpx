@@ -370,10 +370,14 @@ let xml_of_rtept x =
   let Xml.Element (_, attributes, children) = xml_of_wpt x in
   Xml.Element ("rtept", attributes, children)
 
+let xml_of_trkpt x =
+  let Xml.Element (_, attributes, children) = xml_of_wpt x in
+  Xml.Element ("trkpt", attributes, children)
+
 let xml_of_trkseg (x : trkseg) : Xml.xml =
   Xml.Element ("trkseg",
                [],
-               List.map xml_of_wpt x.trkpt
+               List.map xml_of_trkpt x.trkpt
                @ x.extensions
                @@@ [])
 

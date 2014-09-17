@@ -1,4 +1,8 @@
 (test
  (name test_gpx)
- (deps samples/route.gpx samples/track.gpx samples/waypoints.gpx)
+ (deps
+  samples/fells_loop.gpx
+  samples/route.gpx
+  samples/track.gpx
+  samples/waypoints.gpx)
  (libraries gpx xml-light))

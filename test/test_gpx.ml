@@ -10,6 +10,7 @@ let () =
   test "samples/route.gpx";
   test "samples/track.gpx";
   test "samples/waypoints.gpx";
+  test "samples/fells_loop.gpx";
   if !errors = [] then print_endline "All tests ran fine!"
   else (
     List.iter

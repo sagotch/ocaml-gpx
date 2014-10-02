@@ -1,0 +1,4 @@
+version         = "1.0"
+description     = "OCaml type for GPX representation, parser and printer."
+archive(byte)   = "gpx.cma"
+archive(native) = "gpx.cmxa"

@@ -14,7 +14,7 @@ bug-reports: "https://github.com/rundat/ocaml-gpx/issues"
 
 license: "MIT"
 
-available: [ ocaml-version >= "4.02" ]
+available: [ ocaml-version >= "4.01" ]
 
 build: [ make "-C" "src" "build" ]
 

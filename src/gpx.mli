@@ -8,7 +8,7 @@
 (** metadata and extensions are represented as Xml.xml. *)
 
 type gpx = {
-  version: float; (* Must be 1.1 *)
+  version: string; (* Must be 1.1 *)
   creator: string;
   metadata: metadata option;
   wpt: wpt list;

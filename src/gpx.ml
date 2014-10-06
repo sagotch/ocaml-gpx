@@ -1,5 +1,5 @@
 type gpx = {
-  version: float; (* Must be 1.1 *)
+  version: string; (* Must be 1.1 *)
   creator: string;
   metadata: metadata option;
   wpt: wpt list;
@@ -290,7 +290,7 @@ let metadata xml = {
 }
 
 let gpx xml = {
-  version    = attrib xml "version" |> float_of_string;
+  version    = attrib xml "version";
   creator    = attrib xml "creator";
   metadata   = opt_child xml "metadata" |> opt_apply metadata;
   wpt        = List.map wpt (list xml "wpt");
@@ -449,7 +449,7 @@ let xml_of_metadata (x : metadata) : Xml.xml =
 
 let xml_of_gpx x =
   Xml.Element ("gpx",
-               [("version", string_of_float x.version);
+               [("version", x.version);
                 ("creator", x.creator)],
                opt_apply xml_of_metadata x.metadata
                @@@ List.map xml_of_wpt x.wpt

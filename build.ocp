@@ -1,5 +1,0 @@
-begin library "gpx"
-  dirname += ["src"]
-  files = ["gpx.ml"]
-  requires = ["str" ; "xml-light"]
-end

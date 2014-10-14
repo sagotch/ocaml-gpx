@@ -1,0 +1,117 @@
+<html><head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Gpx" rel="Chapter" href="Gpx.html"><title>Gpx</title>
+</head>
+<body>
+<code class="code"><span class="keyword">sig</span><br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;gpx&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;version&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;creator&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;metadata&nbsp;:&nbsp;<span class="constructor">Gpx</span>.metadata&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;wpt&nbsp;:&nbsp;<span class="constructor">Gpx</span>.wpt&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;rte&nbsp;:&nbsp;<span class="constructor">Gpx</span>.rte&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;trk&nbsp;:&nbsp;<span class="constructor">Gpx</span>.trk&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;extensions&nbsp;:&nbsp;<span class="constructor">Gpx</span>.extension&nbsp;option;<br>
+&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">and</span>&nbsp;metadata&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;:&nbsp;string&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;desc&nbsp;:&nbsp;string&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;author&nbsp;:&nbsp;<span class="constructor">Gpx</span>.person&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;copyright&nbsp;:&nbsp;<span class="constructor">Gpx</span>.copyright&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;link&nbsp;:&nbsp;<span class="constructor">Gpx</span>.link&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;:&nbsp;<span class="constructor">Gpx</span>.date_time&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;keywords&nbsp;:&nbsp;string&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bounds&nbsp;:&nbsp;<span class="constructor">Gpx</span>.bounds&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;extensions&nbsp;:&nbsp;<span class="constructor">Gpx</span>.extension&nbsp;option;<br>
+&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">and</span>&nbsp;wpt&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;lat&nbsp;:&nbsp;<span class="constructor">Gpx</span>.latitude;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;lon&nbsp;:&nbsp;<span class="constructor">Gpx</span>.longitude;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;:&nbsp;<span class="constructor">Gpx</span>.date_time&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ele&nbsp;:&nbsp;float&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;magvar&nbsp;:&nbsp;<span class="constructor">Gpx</span>.degrees&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;geoidheight&nbsp;:&nbsp;float&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;:&nbsp;string&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cmt&nbsp;:&nbsp;string&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;desc&nbsp;:&nbsp;string&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;src&nbsp;:&nbsp;string&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;link&nbsp;:&nbsp;<span class="constructor">Gpx</span>.link&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sym&nbsp;:&nbsp;string&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;typ&nbsp;:&nbsp;string&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;fix&nbsp;:&nbsp;<span class="constructor">Gpx</span>.fix&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;sat&nbsp;:&nbsp;int&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;vdop&nbsp;:&nbsp;float&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;hdop&nbsp;:&nbsp;float&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pdop&nbsp;:&nbsp;float&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ageofdgpsdata&nbsp;:&nbsp;float&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;dgpsid&nbsp;:&nbsp;<span class="constructor">Gpx</span>.dgps_station&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;extensions&nbsp;:&nbsp;<span class="constructor">Gpx</span>.extension&nbsp;option;<br>
+&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">and</span>&nbsp;rte&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;:&nbsp;string&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cmt&nbsp;:&nbsp;string&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;desc&nbsp;:&nbsp;string&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;src&nbsp;:&nbsp;string&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;link&nbsp;:&nbsp;<span class="constructor">Gpx</span>.link&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;:&nbsp;int&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;typ&nbsp;:&nbsp;string&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;extensions&nbsp;:&nbsp;<span class="constructor">Gpx</span>.extension&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;rtept&nbsp;:&nbsp;<span class="constructor">Gpx</span>.wpt&nbsp;list;<br>
+&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">and</span>&nbsp;trk&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;:&nbsp;string&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cmt&nbsp;:&nbsp;string&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;desc&nbsp;:&nbsp;string&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;src&nbsp;:&nbsp;string&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;link&nbsp;:&nbsp;<span class="constructor">Gpx</span>.link&nbsp;list;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;number&nbsp;:&nbsp;int&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;typ&nbsp;:&nbsp;string&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;extensions&nbsp;:&nbsp;<span class="constructor">Gpx</span>.extension&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;trkseg&nbsp;:&nbsp;<span class="constructor">Gpx</span>.trkseg&nbsp;list;<br>
+&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">and</span>&nbsp;extension&nbsp;=&nbsp;<span class="constructor">Xml</span>.xml<br>
+&nbsp;&nbsp;<span class="keyword">and</span>&nbsp;trkseg&nbsp;=&nbsp;{&nbsp;trkpt&nbsp;:&nbsp;<span class="constructor">Gpx</span>.wpt&nbsp;list;&nbsp;extensions&nbsp;:&nbsp;<span class="constructor">Gpx</span>.extension&nbsp;option;&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">and</span>&nbsp;copyright&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;author&nbsp;:&nbsp;string;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;year&nbsp;:&nbsp;int&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;license&nbsp;:&nbsp;string&nbsp;option;<br>
+&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">and</span>&nbsp;link&nbsp;=&nbsp;{&nbsp;href&nbsp;:&nbsp;string;&nbsp;text&nbsp;:&nbsp;string&nbsp;option;&nbsp;typ&nbsp;:&nbsp;string&nbsp;option;&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">and</span>&nbsp;email&nbsp;=&nbsp;{&nbsp;id&nbsp;:&nbsp;string;&nbsp;domain&nbsp;:&nbsp;string;&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">and</span>&nbsp;person&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;:&nbsp;string&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;email&nbsp;:&nbsp;<span class="constructor">Gpx</span>.email&nbsp;option;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;link&nbsp;:&nbsp;<span class="constructor">Gpx</span>.link&nbsp;option;<br>
+&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">and</span>&nbsp;bounds&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;minlat&nbsp;:&nbsp;<span class="constructor">Gpx</span>.latitude;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;minlon&nbsp;:&nbsp;<span class="constructor">Gpx</span>.longitude;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;maxlat&nbsp;:&nbsp;<span class="constructor">Gpx</span>.latitude;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;maxlon&nbsp;:&nbsp;<span class="constructor">Gpx</span>.longitude;<br>
+&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">and</span>&nbsp;latitude&nbsp;=&nbsp;float<br>
+&nbsp;&nbsp;<span class="keyword">and</span>&nbsp;longitude&nbsp;=&nbsp;float<br>
+&nbsp;&nbsp;<span class="keyword">and</span>&nbsp;degrees&nbsp;=&nbsp;float<br>
+&nbsp;&nbsp;<span class="keyword">and</span>&nbsp;fix&nbsp;=&nbsp;<span class="constructor">FIX_none</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">FIX_2d</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">FIX_3d</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">FIX_dgps</span>&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">FIX_pps</span><br>
+&nbsp;&nbsp;<span class="keyword">and</span>&nbsp;dgps_station&nbsp;=&nbsp;int<br>
+&nbsp;&nbsp;<span class="keyword">and</span>&nbsp;date_time&nbsp;=&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;year&nbsp;:&nbsp;int;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;month&nbsp;:&nbsp;int;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;day&nbsp;:&nbsp;int;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;hour&nbsp;:&nbsp;int;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;minute&nbsp;:&nbsp;int;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;second&nbsp;:&nbsp;float;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;timezone&nbsp;:&nbsp;<span class="constructor">Gpx</span>.timezone&nbsp;option;<br>
+&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;<span class="keyword">and</span>&nbsp;timezone&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">TIMEZONE_Z</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">TIMEZONE_plus</span>&nbsp;<span class="keyword">of</span>&nbsp;int&nbsp;*&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">TIMEZONE_minus</span>&nbsp;<span class="keyword">of</span>&nbsp;int&nbsp;*&nbsp;int<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;of_xml&nbsp;:&nbsp;<span class="constructor">Xml</span>.xml&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Gpx</span>.gpx<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;to_xml&nbsp;:&nbsp;<span class="constructor">Gpx</span>.gpx&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Xml</span>.xml<br>
+<span class="keyword">end</span></code></body></html>

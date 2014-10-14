@@ -1,0 +1,720 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Gpx" rel="Chapter" href="Gpx.html"><title>Gpx</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;</div>
+<h1>Module <a href="type_Gpx.html">Gpx</a></h1>
+
+<pre><span class="keyword">module</span> Gpx: <code class="code">sig</code> <a href="Gpx.html">..</a> <code class="code">end</code></pre><div class="info module top">
+GPX schema version 1.1<br>
+</div>
+<hr width="100%">
+<br>
+This library is based on Xml-light.
+    Metadata and extensions are represented as Xml.xml,
+    from Xml-light library.<br>
+
+<pre><code><span id="TYPEgpx"><span class="keyword">type</span> <code class="type"></code>gpx</span> = {</code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTgpx.version">version</span>&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTgpx.creator">creator</span>&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTgpx.metadata">metadata</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPEmetadata">metadata</a> option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTgpx.wpt">wpt</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPEwpt">wpt</a> list</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTgpx.rte">rte</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPErte">rte</a> list</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTgpx.trk">trk</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPEtrk">trk</a> list</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTgpx.extensions">extensions</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPEextension">extension</a> option</code>;</code></td>
+
+</tr></table>
+}
+
+
+
+<pre><code><span id="TYPEmetadata"><span class="keyword">type</span> <code class="type"></code>metadata</span> = {</code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTmetadata.name">name</span>&nbsp;: <code class="type">string option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTmetadata.desc">desc</span>&nbsp;: <code class="type">string option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTmetadata.author">author</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPEperson">person</a> option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTmetadata.copyright">copyright</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPEcopyright">copyright</a> option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTmetadata.link">link</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPElink">link</a> list</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTmetadata.time">time</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPEdate_time">date_time</a> option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTmetadata.keywords">keywords</span>&nbsp;: <code class="type">string option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTmetadata.bounds">bounds</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPEbounds">bounds</a> option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTmetadata.extensions">extensions</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPEextension">extension</a> option</code>;</code></td>
+
+</tr></table>
+}
+
+
+
+<pre><code><span id="TYPEwpt"><span class="keyword">type</span> <code class="type"></code>wpt</span> = {</code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTwpt.lat">lat</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPElatitude">latitude</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTwpt.lon">lon</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPElongitude">longitude</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTwpt.time">time</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPEdate_time">date_time</a> option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTwpt.ele">ele</span>&nbsp;: <code class="type">float option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTwpt.magvar">magvar</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPEdegrees">degrees</a> option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTwpt.geoidheight">geoidheight</span>&nbsp;: <code class="type">float option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTwpt.name">name</span>&nbsp;: <code class="type">string option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTwpt.cmt">cmt</span>&nbsp;: <code class="type">string option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTwpt.desc">desc</span>&nbsp;: <code class="type">string option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTwpt.src">src</span>&nbsp;: <code class="type">string option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTwpt.link">link</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPElink">link</a> list</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTwpt.sym">sym</span>&nbsp;: <code class="type">string option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTwpt.typ">typ</span>&nbsp;: <code class="type">string option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTwpt.fix">fix</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPEfix">fix</a> option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTwpt.sat">sat</span>&nbsp;: <code class="type">int option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTwpt.vdop">vdop</span>&nbsp;: <code class="type">float option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTwpt.hdop">hdop</span>&nbsp;: <code class="type">float option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTwpt.pdop">pdop</span>&nbsp;: <code class="type">float option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTwpt.ageofdgpsdata">ageofdgpsdata</span>&nbsp;: <code class="type">float option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTwpt.dgpsid">dgpsid</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPEdgps_station">dgps_station</a> option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTwpt.extensions">extensions</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPEextension">extension</a> option</code>;</code></td>
+
+</tr></table>
+}
+
+
+
+<pre><code><span id="TYPErte"><span class="keyword">type</span> <code class="type"></code>rte</span> = {</code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTrte.name">name</span>&nbsp;: <code class="type">string option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTrte.cmt">cmt</span>&nbsp;: <code class="type">string option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTrte.desc">desc</span>&nbsp;: <code class="type">string option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTrte.src">src</span>&nbsp;: <code class="type">string option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTrte.link">link</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPElink">link</a> list</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTrte.number">number</span>&nbsp;: <code class="type">int option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTrte.typ">typ</span>&nbsp;: <code class="type">string option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTrte.extensions">extensions</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPEextension">extension</a> option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTrte.rtept">rtept</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPEwpt">wpt</a> list</code>;</code></td>
+
+</tr></table>
+}
+
+
+
+<pre><code><span id="TYPEtrk"><span class="keyword">type</span> <code class="type"></code>trk</span> = {</code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTtrk.name">name</span>&nbsp;: <code class="type">string option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTtrk.cmt">cmt</span>&nbsp;: <code class="type">string option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTtrk.desc">desc</span>&nbsp;: <code class="type">string option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTtrk.src">src</span>&nbsp;: <code class="type">string option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTtrk.link">link</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPElink">link</a> list</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTtrk.number">number</span>&nbsp;: <code class="type">int option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTtrk.typ">typ</span>&nbsp;: <code class="type">string option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTtrk.extensions">extensions</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPEextension">extension</a> option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTtrk.trkseg">trkseg</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPEtrkseg">trkseg</a> list</code>;</code></td>
+
+</tr></table>
+}
+
+
+
+<pre><span id="TYPEextension"><span class="keyword">type</span> <code class="type"></code>extension</span> = <code class="type">Xml.xml</code> </pre>
+
+
+<pre><code><span id="TYPEtrkseg"><span class="keyword">type</span> <code class="type"></code>trkseg</span> = {</code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTtrkseg.trkpt">trkpt</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPEwpt">wpt</a> list</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTtrkseg.extensions">extensions</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPEextension">extension</a> option</code>;</code></td>
+
+</tr></table>
+}
+
+
+
+<pre><code><span id="TYPEcopyright"><span class="keyword">type</span> <code class="type"></code>copyright</span> = {</code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTcopyright.author">author</span>&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTcopyright.year">year</span>&nbsp;: <code class="type">int option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTcopyright.license">license</span>&nbsp;: <code class="type">string option</code>;</code></td>
+
+</tr></table>
+}
+
+
+
+<pre><code><span id="TYPElink"><span class="keyword">type</span> <code class="type"></code>link</span> = {</code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTlink.href">href</span>&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTlink.text">text</span>&nbsp;: <code class="type">string option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTlink.typ">typ</span>&nbsp;: <code class="type">string option</code>;</code></td>
+
+</tr></table>
+}
+
+
+
+<pre><code><span id="TYPEemail"><span class="keyword">type</span> <code class="type"></code>email</span> = {</code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTemail.id">id</span>&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTemail.domain">domain</span>&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr></table>
+}
+
+
+
+<pre><code><span id="TYPEperson"><span class="keyword">type</span> <code class="type"></code>person</span> = {</code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTperson.name">name</span>&nbsp;: <code class="type">string option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTperson.email">email</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPEemail">email</a> option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTperson.link">link</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPElink">link</a> option</code>;</code></td>
+
+</tr></table>
+}
+
+
+
+<pre><code><span id="TYPEbounds"><span class="keyword">type</span> <code class="type"></code>bounds</span> = {</code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTbounds.minlat">minlat</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPElatitude">latitude</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTbounds.minlon">minlon</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPElongitude">longitude</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTbounds.maxlat">maxlat</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPElatitude">latitude</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTbounds.maxlon">maxlon</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPElongitude">longitude</a></code>;</code></td>
+
+</tr></table>
+}
+
+
+
+<pre><span id="TYPElatitude"><span class="keyword">type</span> <code class="type"></code>latitude</span> = <code class="type">float</code> </pre>
+
+
+<pre><span id="TYPElongitude"><span class="keyword">type</span> <code class="type"></code>longitude</span> = <code class="type">float</code> </pre>
+
+
+<pre><span id="TYPEdegrees"><span class="keyword">type</span> <code class="type"></code>degrees</span> = <code class="type">float</code> </pre>
+
+
+<pre><code><span id="TYPEfix"><span class="keyword">type</span> <code class="type"></code>fix</span> = </code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTfix.FIX_none"><span class="constructor">FIX_none</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTfix.FIX_2d"><span class="constructor">FIX_2d</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTfix.FIX_3d"><span class="constructor">FIX_3d</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTfix.FIX_dgps"><span class="constructor">FIX_dgps</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTfix.FIX_pps"><span class="constructor">FIX_pps</span></span></code></td>
+
+</tr></table>
+
+
+
+<pre><span id="TYPEdgps_station"><span class="keyword">type</span> <code class="type"></code>dgps_station</span> = <code class="type">int</code> </pre>
+
+
+<pre><code><span id="TYPEdate_time"><span class="keyword">type</span> <code class="type"></code>date_time</span> = {</code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTdate_time.year">year</span>&nbsp;: <code class="type">int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTdate_time.month">month</span>&nbsp;: <code class="type">int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTdate_time.day">day</span>&nbsp;: <code class="type">int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTdate_time.hour">hour</span>&nbsp;: <code class="type">int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTdate_time.minute">minute</span>&nbsp;: <code class="type">int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTdate_time.second">second</span>&nbsp;: <code class="type">float</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTdate_time.timezone">timezone</span>&nbsp;: <code class="type"><a href="Gpx.html#TYPEtimezone">timezone</a> option</code>;</code></td>
+
+</tr></table>
+}
+
+
+
+<pre><code><span id="TYPEtimezone"><span class="keyword">type</span> <code class="type"></code>timezone</span> = </code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTtimezone.TIMEZONE_Z"><span class="constructor">TIMEZONE_Z</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTtimezone.TIMEZONE_plus"><span class="constructor">TIMEZONE_plus</span></span> <span class="keyword">of</span> <code class="type">int * int</code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTtimezone.TIMEZONE_minus"><span class="constructor">TIMEZONE_minus</span></span> <span class="keyword">of</span> <code class="type">int * int</code></code></td>
+
+</tr></table>
+
+
+
+<pre><span id="VALof_xml"><span class="keyword">val</span> of_xml</span> : <code class="type">Xml.xml -> <a href="Gpx.html#TYPEgpx">gpx</a></code></pre>
+<pre><span id="VALto_xml"><span class="keyword">val</span> to_xml</span> : <code class="type"><a href="Gpx.html#TYPEgpx">gpx</a> -> Xml.xml</code></pre></body></html>

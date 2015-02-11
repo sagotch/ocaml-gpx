@@ -174,8 +174,8 @@ let time_of_string s : date_time =
           ^ "-" ^ grp (num ^ num)                               (* 3     *)
           ^ "T" ^ grp (num ^ num)                               (* 4     *)
           ^ ":" ^ grp (num ^ num)                               (* 5     *)
-          ^ ":" ^ grp (num ^ num ^ grp ("." ^ num ^ num) ^ "?") (* 6 (7) *)
-          ^ "\\(.+\\)"                                          (* 8     *)
+          ^ ":" ^ grp (num ^ num ^ grp ("\\." ^ num ^ "+") ^ "?") (* 6 (7) *)
+          ^ "\\([+-Z].*\\)?"                                      (* 8     *)
           |> Str.regexp in
   assert (Str.string_match r s 0);
   { year     = int_of_string (Str.matched_group 1 s);

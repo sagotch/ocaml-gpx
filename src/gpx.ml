@@ -141,7 +141,9 @@ let opt_child xml tag =
 
 let opt_pcdata xml tag =
   opt_child xml tag
-  |> opt_apply (fun x -> Xml.children x |> List.hd |> Xml.pcdata)
+  |> opt_apply (fun x -> Xml.children x
+			 |> List.map Xml.pcdata
+			 |> String.concat "\n")
 
 let opt_string xml tag =
   opt_pcdata xml tag

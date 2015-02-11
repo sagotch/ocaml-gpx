@@ -180,14 +180,18 @@ let time_of_string s : date_time =
           ^ "\\([+-Z].*\\)?"                                      (* 8     *)
           |> Str.regexp in
   assert (Str.string_match r s 0);
-  { year     = int_of_string (Str.matched_group 1 s);
-    month    = int_of_string (Str.matched_group 2 s);
-    day      = int_of_string (Str.matched_group 3 s);
-    hour     = int_of_string (Str.matched_group 4 s);
-    minute   = int_of_string (Str.matched_group 5 s);
-    second   = float_of_string (Str.matched_group 6 s);
-    timezone = try Some (timezone_of_string (Str.matched_group 8 s))
-               with Not_found -> None }
+  let year     = int_of_string (Str.matched_group 1 s) in
+  let month    = int_of_string (Str.matched_group 2 s) in
+  let day      = int_of_string (Str.matched_group 3 s) in
+  let hour     = int_of_string (Str.matched_group 4 s) in
+  let minute   = int_of_string (Str.matched_group 5 s) in
+  let second   = float_of_string (Str.matched_group 6 s) in
+  let timezone = try Some (timezone_of_string (Str.matched_group 8 s))
+		 with Not_found -> None
+
+  in { year = year ; month = month ; day = day ;
+       hour = hour ; minute = minute ; second = second ;
+       timezone = timezone  }
 
 let fix_of_string = function
   | "none" -> FIX_none

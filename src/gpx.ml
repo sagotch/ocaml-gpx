@@ -115,19 +115,7 @@ type gpx = {
 
  and dgps_station = int (* 0 <= value <= 1023 *)
 
- and date_time = {
-   year: int;
-   month: int;
-   day: int;
-   hour: int;
-   minute: int;
-   second: float;
-   timezone: timezone option;
- }
-
- and timezone = TIMEZONE_Z
-              | TIMEZONE_plus of int * int
-              | TIMEZONE_minus of int * int
+ and date_time = (float * float option) (* UTC time, timezone offset *)
 
 let warning w = print_endline ("WARNING: " ^ w)
 
@@ -158,40 +146,8 @@ let list xml tag =
   try List.find_all (fun x -> Xml.tag x = tag) (Xml.children xml)
   with Not_found -> []
 
-let timezone_of_string = function
-  | "Z" -> TIMEZONE_Z
-  | s -> let r = Str.regexp "\\([+-]\\)\\([0-9][0-9]\\):\\([0-9][0-9]\\)" in
-         assert (Str.string_match r s 0);
-         let hh = Str.matched_group 2 s |> int_of_string in
-         let mm = Str.matched_group 3 s |> int_of_string in
-         if Str.matched_group 1 s = "+"
-         then TIMEZONE_plus (hh, mm)
-         else TIMEZONE_minus (hh, mm)
-
 let time_of_string s : date_time =
-  let num = "[0-9]" in
-  let grp s = "\\(" ^ s ^ "\\)" in
-  let r = grp ("-?" ^ num ^ num ^ num ^ num ^ "+")              (* 1     *)
-          ^ "-" ^ grp (num ^ num)                               (* 2     *)
-          ^ "-" ^ grp (num ^ num)                               (* 3     *)
-          ^ "T" ^ grp (num ^ num)                               (* 4     *)
-          ^ ":" ^ grp (num ^ num)                               (* 5     *)
-          ^ ":" ^ grp (num ^ num ^ grp ("\\." ^ num ^ "+") ^ "?") (* 6 (7) *)
-          ^ "\\([+-Z].*\\)?"                                      (* 8     *)
-          |> Str.regexp in
-  assert (Str.string_match r s 0);
-  let year     = int_of_string (Str.matched_group 1 s) in
-  let month    = int_of_string (Str.matched_group 2 s) in
-  let day      = int_of_string (Str.matched_group 3 s) in
-  let hour     = int_of_string (Str.matched_group 4 s) in
-  let minute   = int_of_string (Str.matched_group 5 s) in
-  let second   = float_of_string (Str.matched_group 6 s) in
-  let timezone = try Some (timezone_of_string (Str.matched_group 8 s))
-		 with Not_found -> None
-
-  in { year = year ; month = month ; day = day ;
-       hour = hour ; minute = minute ; second = second ;
-       timezone = timezone  }
+  ISO8601.Permissive.datetime_tz s
 
 let fix_of_string = function
   | "none" -> FIX_none
@@ -317,15 +273,7 @@ let string_of_fix = function
   | FIX_pps  -> "pps"
 
 let string_of_date_time (x : date_time) : string =
-  let string_of_timezone_opt = function
-    | None -> ""
-    | Some z -> match z with
-                | TIMEZONE_Z            -> "Z"
-                | TIMEZONE_plus (h, m)  -> Printf.sprintf "+%02d:%02d" h m
-                | TIMEZONE_minus (h, m) -> Printf.sprintf "-%02d:%02d" h m in
-  Printf.sprintf "%04d-%02d-%02dT%02d:%02d:%02.2f%s"
-                 x.year x.month x.day x.hour x.minute x.second
-                 (string_of_timezone_opt x.timezone)
+  ISO8601.Permissive.string_of_datetime ~tz:(snd x) (fst x)
 
 let wrap_int = fun tag int ->
   Xml.Element (tag, [], [Xml.PCData (string_of_int int)])

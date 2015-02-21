@@ -126,19 +126,7 @@ type gpx = {
 
  and dgps_station = int (* 0 <= value <= 1023 *)
 
- and date_time = {
-   year: int;
-   month: int;
-   day: int;
-   hour: int;
-   minute: int;
-   second: float;
-   timezone: timezone option;
- }
-
- and timezone = TIMEZONE_Z
-              | TIMEZONE_plus of int * int
-              | TIMEZONE_minus of int * int
+ and date_time = (float * float option) (* UTC time, timezone offset *)
 
 val of_xml : Xml.xml -> gpx
 val to_xml : gpx -> Xml.xml

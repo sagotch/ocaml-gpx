@@ -1,4 +1,4 @@
-FLAGS     =-package str -package xml-light
+FLAGS     =-package str -package xml-light -package ISO8601
 OCAMLFIND =ocamlfind
 CAMLC     =$(OCAMLFIND) ocamlc $(FLAGS)
 CAMLOPT   =$(OCAMLFIND) ocamlopt $(FLAGS)

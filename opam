@@ -6,7 +6,7 @@ author: "Julien Sagot <ju.sagot@gmail.com>"
 
 name: "gpx"
 
-version: "1.0.2"
+version: "1.1.0"
 
 homepage: "http://rundat.github.io/ocaml-gpx/"
 
@@ -23,4 +23,5 @@ install: [ make "-C" "src" "install" ]
 remove: [ make "-C" "src" "uninstall" ]
 
 depends: [ "ocamlfind" { build }
-           "xml-light" ]
+           "xml-light"
+           "ISO8601" ]

@@ -16,6 +16,8 @@ license: "MIT"
 
 available: [ ocaml-version >= "4.01" ]
 
+build-doc: [ make "-C" "src" "doc" ]
+
 build: [ make "-C" "src" "build" ]
 
 install: [ make "-C" "src" "install" ]

@@ -6,6 +6,10 @@ CAMLOPT   =$(OCAMLFIND) ocamlopt $(FLAGS)
 LIBNAME   =gpx
 LIBFILES  =gpx.cmi gpx.cma gpx.cmxa gpx.a
 
+VERSION   =1.1.0
+
+DOCDIR    =doc
+
 .POSIX:
 
 all: build install
@@ -21,5 +25,15 @@ install: $(LIBFILES)
 uninstall:
 	$(OCAMLFIND) remove $(LIBNAME)
 
+doc:
+	mkdir -p $(DOCDIR)
+	ocamldoc -html -d $(DOCDIR) -I `ocamlfind query xml-light` gpx.mli
+
+gh-pages:
+	commitmsg="Documentation for $(VERSION) version." \
+	docdir="$(DOCDIR)" \
+	upstream="origin" \
+	ghpup
+
 clean:
-	rm -f *.cma *.cmxa *.cmi *.o *.cmo *.cmx
+	rm -rf *.cma *.cmxa *.cmi *.o *.cmo *.cmx *.a $(DOCDIR)

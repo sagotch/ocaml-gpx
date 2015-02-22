@@ -284,7 +284,8 @@ let wrap_float = fun tag float ->
 let wrap_string = fun tag string ->
   Xml.Element (tag, [], [Xml.PCData string])
 
-let xml_of_email x : Xml.xml = assert false
+let xml_of_email x : Xml.xml =
+  Xml.Element ("email", [ ("id", x.id) ; ("domain", x.domain) ], [])
 
 let xml_of_link x : Xml.xml =
   Xml.Element ("link",

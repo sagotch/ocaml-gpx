@@ -117,8 +117,6 @@ type gpx = {
 
  and date_time = (float * float option) (* UTC time, timezone offset *)
 
-let warning w = print_endline ("WARNING: " ^ w)
-
 let opt_apply f = function None -> None | Some x -> Some (f x)
 
 module Of_XML = struct

@@ -6,7 +6,7 @@
    metric units. *)
 
 (** This library is based on Xml-light.
-    Metadata and extensions are represented as Xml.xml,
+    Metadata and extensions are represented as [Xml.xml],
     from Xml-light library. *)
 
 type gpx = {
@@ -128,9 +128,19 @@ type gpx = {
 
  and date_time = (float * float option) (* UTC time, timezone offset *)
 
+(** {2 Whole GPX }
+    These two functions are probably all you will need.
+    They allow you to go from a [Xml.xml] value to a [gpx] record,
+    and vice versa. *)
+
 val of_xml : Xml.xml -> gpx
 val to_xml : gpx -> Xml.xml
 
+(** {2 GPX parts }
+    If you are interested in parsing a part of GPX only,
+    you may find the following two modules useful. *)
+
+(** From a [Xml.xml] value *)
 module Of_XML : sig
     val gpx : Xml.xml -> gpx
     val rte : Xml.xml -> rte
@@ -141,6 +151,7 @@ module Of_XML : sig
     val wpt : Xml.xml -> wpt
   end
 
+(** To a [Xml.xml] value *)
 module To_XML : sig
     val gpx : gpx -> Xml.xml
     val rte : rte -> Xml.xml

@@ -119,298 +119,307 @@ type gpx = {
 
 let warning w = print_endline ("WARNING: " ^ w)
 
-let attrib = Xml.attrib
-
 let opt_apply f = function None -> None | Some x -> Some (f x)
 
-let opt_child xml tag =
-  try Some (List.find (fun x -> Xml.tag x = tag) (Xml.children xml))
-  with Not_found -> None
+module Of_XML = struct
 
-let opt_pcdata xml tag =
-  opt_child xml tag
-  |> opt_apply (fun x -> Xml.children x
-			 |> List.map Xml.pcdata
-			 |> String.concat "\n")
+    let attrib = Xml.attrib
 
-let opt_string xml tag =
-  opt_pcdata xml tag
+    let opt_child xml tag =
+      try Some (List.find (fun x -> Xml.tag x = tag) (Xml.children xml))
+      with Not_found -> None
 
-let opt_float xml tag =
-  opt_pcdata xml tag |> opt_apply float_of_string
+    let opt_pcdata xml tag =
+      opt_child xml tag
+      |> opt_apply (fun x -> Xml.children x
+			     |> List.map Xml.pcdata
+			     |> String.concat "\n")
 
-let opt_int xml tag =
-  opt_pcdata xml tag |> opt_apply int_of_string
+    let opt_string xml tag =
+      opt_pcdata xml tag
 
-let list xml tag =
-  try List.find_all (fun x -> Xml.tag x = tag) (Xml.children xml)
-  with Not_found -> []
+    let opt_float xml tag =
+      opt_pcdata xml tag |> opt_apply float_of_string
 
-let time_of_string s : date_time =
-  ISO8601.Permissive.datetime_tz s
+    let opt_int xml tag =
+      opt_pcdata xml tag |> opt_apply int_of_string
 
-let fix_of_string = function
-  | "none" -> FIX_none
-  | "2d"   -> FIX_2d
-  | "3d"   -> FIX_3d
-  | "dgps" -> FIX_dgps
-  | "pps"  -> FIX_pps
+    let list xml tag =
+      try List.find_all (fun x -> Xml.tag x = tag) (Xml.children xml)
+      with Not_found -> []
 
-let link xml = {
-  href = attrib xml "href";
-  text = opt_string xml "text";
-  typ  = opt_string xml "type";
-}
+    let time_of_string s : date_time =
+      ISO8601.Permissive.datetime_tz s
 
-let wpt xml = {
-  lat           = attrib xml "lat" |> float_of_string;
-  lon           = attrib xml "lon" |> float_of_string;
-  time          = opt_pcdata xml "time" |> opt_apply time_of_string;
-  ele           = opt_float xml "ele";
-  magvar        = opt_pcdata xml "magvar" |> opt_apply float_of_string;
-  geoidheight   = opt_float xml "geoidheight";
-  name          = opt_string xml "name";
-  cmt           = opt_string xml "cmt";
-  desc          = opt_string xml "desc";
-  src           = opt_string xml "src";
-  link          = List.map link (list xml "link");
-  sym           = opt_string xml "sym";
-  typ           = opt_string xml "type";
-  fix           = opt_pcdata xml "fix" |> opt_apply fix_of_string;
-  sat           = opt_int xml "sat";
-  vdop          = opt_float xml "vdop";
-  hdop          = opt_float xml "hdop";
-  pdop          = opt_float xml "pdop";
-  ageofdgpsdata = opt_float xml "ageofdgpsdata";
-  dgpsid        = opt_int xml "dgpsid";
-  extensions    = opt_child xml "extensions";
-}
+    let fix_of_string = function
+      | "none" -> FIX_none
+      | "2d"   -> FIX_2d
+      | "3d"   -> FIX_3d
+      | "dgps" -> FIX_dgps
+      | "pps"  -> FIX_pps
 
-let rte xml = {
-  name       = opt_string xml "name";
-  cmt        = opt_string xml "cmt";
-  desc       = opt_string xml "desc";
-  src        = opt_string xml "src";
-  link       = List.map link (list xml "link");
-  number     = opt_int xml "number";
-  typ        = opt_string xml "type";
-  extensions = opt_child xml "extensions";
-  rtept      = List.map wpt (list xml "rtept");
-}
+    let link xml = {
+        href = attrib xml "href";
+        text = opt_string xml "text";
+        typ  = opt_string xml "type";
+      }
 
-let trkseg xml = {
-  trkpt      = List.map wpt (list xml "trkpt");
-  extensions = opt_child xml "extensions";
-}
+    let wpt xml = {
+        lat           = attrib xml "lat" |> float_of_string;
+        lon           = attrib xml "lon" |> float_of_string;
+        time          = opt_pcdata xml "time" |> opt_apply time_of_string;
+        ele           = opt_float xml "ele";
+        magvar        = opt_pcdata xml "magvar" |> opt_apply float_of_string;
+        geoidheight   = opt_float xml "geoidheight";
+        name          = opt_string xml "name";
+        cmt           = opt_string xml "cmt";
+        desc          = opt_string xml "desc";
+        src           = opt_string xml "src";
+        link          = List.map link (list xml "link");
+        sym           = opt_string xml "sym";
+        typ           = opt_string xml "type";
+        fix           = opt_pcdata xml "fix" |> opt_apply fix_of_string;
+        sat           = opt_int xml "sat";
+        vdop          = opt_float xml "vdop";
+        hdop          = opt_float xml "hdop";
+        pdop          = opt_float xml "pdop";
+        ageofdgpsdata = opt_float xml "ageofdgpsdata";
+        dgpsid        = opt_int xml "dgpsid";
+        extensions    = opt_child xml "extensions";
+      }
 
-let trk xml = {
-  name       = opt_string xml "name";
-  cmt        = opt_string xml "cmt";
-  desc       = opt_string xml "desc";
-  src        = opt_string xml "src";
-  link       = List.map link (list xml "link");
-  number     = opt_int xml "number";
-  typ        = opt_string xml "type";
-  extensions = opt_child xml "extensions";
-  trkseg     = List.map trkseg (list xml "trkseg");
-}
+    let rte xml = {
+        name       = opt_string xml "name";
+        cmt        = opt_string xml "cmt";
+        desc       = opt_string xml "desc";
+        src        = opt_string xml "src";
+        link       = List.map link (list xml "link");
+        number     = opt_int xml "number";
+        typ        = opt_string xml "type";
+        extensions = opt_child xml "extensions";
+        rtept      = List.map wpt (list xml "rtept");
+      }
 
-let email xml = {
-  id     = attrib xml "id";
-  domain = attrib xml "domain";
-}
+    let trkseg xml = {
+        trkpt      = List.map wpt (list xml "trkpt");
+        extensions = opt_child xml "extensions";
+      }
 
-let person xml = {
-  name  = opt_string xml "name";
-  email = opt_child xml "email" |> opt_apply email;
-  link  = opt_child xml "link" |> opt_apply link;
-}
+    let trk xml = {
+        name       = opt_string xml "name";
+        cmt        = opt_string xml "cmt";
+        desc       = opt_string xml "desc";
+        src        = opt_string xml "src";
+        link       = List.map link (list xml "link");
+        number     = opt_int xml "number";
+        typ        = opt_string xml "type";
+        extensions = opt_child xml "extensions";
+        trkseg     = List.map trkseg (list xml "trkseg");
+      }
 
-let copyright xml = {
-  author  = attrib xml "author";
-  year    = opt_int xml "year";
-  license = opt_string xml "license";
-}
+    let email xml = {
+        id     = attrib xml "id";
+        domain = attrib xml "domain";
+      }
 
-let bounds xml = {
-  minlat = attrib xml "minlat" |> float_of_string;
-  minlon = attrib xml "minlon" |> float_of_string;
-  maxlat = attrib xml "maxlat" |> float_of_string;
-  maxlon = attrib xml "maxlon" |> float_of_string;
-}
+    let person xml = {
+        name  = opt_string xml "name";
+        email = opt_child xml "email" |> opt_apply email;
+        link  = opt_child xml "link" |> opt_apply link;
+      }
 
-let metadata xml = {
-  name       = opt_string xml "name";
-  desc       = opt_string xml "desc";
-  author     = opt_child xml "author" |> opt_apply person;
-  copyright  = opt_child xml "copyright" |> opt_apply copyright;
-  link       = List.map link (list xml "link");
-  time       = opt_pcdata xml "time" |> opt_apply time_of_string;
-  keywords   = opt_string xml "keywords";
-  bounds     = opt_child xml "bounds" |> opt_apply bounds;
-  extensions = opt_child xml "extensions";
-}
+    let copyright xml = {
+        author  = attrib xml "author";
+        year    = opt_int xml "year";
+        license = opt_string xml "license";
+      }
 
-let gpx xml = {
-  version    = attrib xml "version";
-  creator    = attrib xml "creator";
-  metadata   = opt_child xml "metadata" |> opt_apply metadata;
-  wpt        = List.map wpt (list xml "wpt");
-  rte        = List.map rte (list xml "rte");
-  trk        = List.map trk (list xml "trk");
-  extensions = opt_child xml "extensions";
-}
+    let bounds xml = {
+        minlat = attrib xml "minlat" |> float_of_string;
+        minlon = attrib xml "minlon" |> float_of_string;
+        maxlat = attrib xml "maxlat" |> float_of_string;
+        maxlon = attrib xml "maxlon" |> float_of_string;
+      }
 
-let of_xml = gpx
+    let metadata xml = {
+        name       = opt_string xml "name";
+        desc       = opt_string xml "desc";
+        author     = opt_child xml "author" |> opt_apply person;
+        copyright  = opt_child xml "copyright" |> opt_apply copyright;
+        link       = List.map link (list xml "link");
+        time       = opt_pcdata xml "time" |> opt_apply time_of_string;
+        keywords   = opt_string xml "keywords";
+        bounds     = opt_child xml "bounds" |> opt_apply bounds;
+        extensions = opt_child xml "extensions";
+      }
 
-let (@@@) hd tl = match hd with None -> tl | Some hd -> hd :: tl
+    let gpx xml = {
+        version    = attrib xml "version";
+        creator    = attrib xml "creator";
+        metadata   = opt_child xml "metadata" |> opt_apply metadata;
+        wpt        = List.map wpt (list xml "wpt");
+        rte        = List.map rte (list xml "rte");
+        trk        = List.map trk (list xml "trk");
+        extensions = opt_child xml "extensions";
+      }
 
-let string_of_fix = function
-  | FIX_none -> "none"
-  | FIX_2d   -> "2d"
-  | FIX_3d   -> "3d"
-  | FIX_dgps -> "dgps"
-  | FIX_pps  -> "pps"
+    let trkpt = wpt
+    let rtept = wpt
+end
 
-let string_of_date_time (x : date_time) : string =
-  ISO8601.Permissive.string_of_datetime ~tz:(snd x) (fst x)
+module To_XML = struct
 
-let wrap_int = fun tag int ->
-  Xml.Element (tag, [], [Xml.PCData (string_of_int int)])
+    let (@@@) hd tl = match hd with None -> tl | Some hd -> hd :: tl
 
-let wrap_float = fun tag float ->
-  Xml.Element (tag, [], [Xml.PCData (string_of_float float)])
+    let string_of_fix = function
+      | FIX_none -> "none"
+      | FIX_2d   -> "2d"
+      | FIX_3d   -> "3d"
+      | FIX_dgps -> "dgps"
+      | FIX_pps  -> "pps"
 
-let wrap_string = fun tag string ->
-  Xml.Element (tag, [], [Xml.PCData string])
+    let string_of_date_time (x : date_time) : string =
+      ISO8601.Permissive.string_of_datetime ~tz:(snd x) (fst x)
 
-let xml_of_email x : Xml.xml =
-  Xml.Element ("email", [ ("id", x.id) ; ("domain", x.domain) ], [])
+    let wrap_int = fun tag int ->
+      Xml.Element (tag, [], [Xml.PCData (string_of_int int)])
 
-let xml_of_link x : Xml.xml =
-  Xml.Element ("link",
-               [("href", x.href)],
-               opt_apply (wrap_string "text") x.text
-               @@@ opt_apply (wrap_string "type") x.typ
-               @@@ [])
+    let wrap_float = fun tag float ->
+      Xml.Element (tag, [], [Xml.PCData (string_of_float float)])
 
-let xml_of_wpt (x : wpt) : Xml.xml =
-  Xml.Element ("wpt",
-               [ ("lat", string_of_float x.lat) ;
-                 ("lon", string_of_float x.lon) ],
-               opt_apply (fun x -> wrap_string "time" (string_of_date_time x))
-                         x.time
-               @@@ opt_apply (wrap_float "ele") x.ele
-               @@@ opt_apply (wrap_float "degrees") x.magvar
-               @@@ opt_apply (wrap_float "geoidheight") x.geoidheight
-               @@@ opt_apply (wrap_string "name") x.name
-               @@@ opt_apply (wrap_string "cmt") x.cmt
-               @@@ opt_apply (wrap_string "desc") x.desc
-               @@@ opt_apply (wrap_string "src") x.src
-               @@@ List.map xml_of_link x.link
-               @ opt_apply (wrap_string "sym") x.sym
-               @@@ opt_apply (wrap_string "typ") x.typ
-               @@@ opt_apply (fun x -> wrap_string "fix" (string_of_fix x))
-                             x.fix
-               @@@ opt_apply (wrap_int "sat") x.sat
-               @@@ opt_apply (wrap_float "vdop") x.vdop
-               @@@ opt_apply (wrap_float "hdop") x.hdop
-               @@@ opt_apply (wrap_float "pdop") x.pdop
-               @@@ opt_apply (wrap_float "ageofdgpsdata") x.ageofdgpsdata
-               @@@ opt_apply (wrap_int "dgpsid") x.dgpsid
-               @@@ x.extensions
-               @@@ [])
+    let wrap_string = fun tag string ->
+      Xml.Element (tag, [], [Xml.PCData string])
 
-let xml_of_rtept x =
-  let Xml.Element (_, attributes, children) = xml_of_wpt x in
-  Xml.Element ("rtept", attributes, children)
+    let email x : Xml.xml =
+      Xml.Element ("email", [ ("id", x.id) ; ("domain", x.domain) ], [])
 
-let xml_of_trkpt x =
-  let Xml.Element (_, attributes, children) = xml_of_wpt x in
-  Xml.Element ("trkpt", attributes, children)
+    let link x : Xml.xml =
+      Xml.Element ("link",
+                   [("href", x.href)],
+                   opt_apply (wrap_string "text") x.text
+                   @@@ opt_apply (wrap_string "type") x.typ
+                   @@@ [])
 
-let xml_of_trkseg (x : trkseg) : Xml.xml =
-  Xml.Element ("trkseg",
-               [],
-               List.map xml_of_trkpt x.trkpt
-               @ x.extensions
-               @@@ [])
+    let wpt (x : wpt) : Xml.xml =
+      Xml.Element ("wpt",
+                   [ ("lat", string_of_float x.lat) ;
+                     ("lon", string_of_float x.lon) ],
+                   opt_apply (fun x -> wrap_string "time" (string_of_date_time x))
+                             x.time
+                   @@@ opt_apply (wrap_float "ele") x.ele
+                   @@@ opt_apply (wrap_float "degrees") x.magvar
+                   @@@ opt_apply (wrap_float "geoidheight") x.geoidheight
+                   @@@ opt_apply (wrap_string "name") x.name
+                   @@@ opt_apply (wrap_string "cmt") x.cmt
+                   @@@ opt_apply (wrap_string "desc") x.desc
+                   @@@ opt_apply (wrap_string "src") x.src
+                   @@@ List.map link x.link
+                   @ opt_apply (wrap_string "sym") x.sym
+                   @@@ opt_apply (wrap_string "typ") x.typ
+                   @@@ opt_apply (fun x -> wrap_string "fix" (string_of_fix x))
+                                 x.fix
+                   @@@ opt_apply (wrap_int "sat") x.sat
+                   @@@ opt_apply (wrap_float "vdop") x.vdop
+                   @@@ opt_apply (wrap_float "hdop") x.hdop
+                   @@@ opt_apply (wrap_float "pdop") x.pdop
+                   @@@ opt_apply (wrap_float "ageofdgpsdata") x.ageofdgpsdata
+                   @@@ opt_apply (wrap_int "dgpsid") x.dgpsid
+                   @@@ x.extensions
+                   @@@ [])
 
-let xml_of_bounds (x : bounds) : Xml.xml =
-  Xml.Element ("bounds",
-               [ ("minlat", string_of_float x.minlat) ;
-                 ("minlon", string_of_float x.minlon) ;
-                 ("maxlat", string_of_float x.maxlat) ;
-                 ("maxlon", string_of_float x.maxlon) ; ],
-               [])
+    let rtept x =
+      let Xml.Element (_, attributes, children) = wpt x in
+      Xml.Element ("rtept", attributes, children)
 
-let xml_of_copyright (x : copyright) : Xml.xml =
-  Xml.Element ("copyright",
-               [("author", x.author)],
-               opt_apply (wrap_int "year") x.year
-               @@@ opt_apply (wrap_string "license") x.license
-               @@@ [])
+    let trkpt x =
+      let Xml.Element (_, attributes, children) = wpt x in
+      Xml.Element ("trkpt", attributes, children)
 
-let xml_of_author (x : person) : Xml.xml =
-  Xml.Element ("author",
-               [],
-               opt_apply (wrap_string "name") x.name
-               @@@ opt_apply xml_of_email x.email
-               @@@ opt_apply xml_of_link x.link
-               @@@ [])
+    let trkseg (x : trkseg) : Xml.xml =
+      Xml.Element ("trkseg",
+                   [],
+                   List.map trkpt x.trkpt
+                   @ x.extensions
+                   @@@ [])
 
-let xml_of_rte (x : rte) : Xml.xml =
-  Xml.Element ("rte",
-               [],
-               opt_apply (wrap_string "name") x.name
-               @@@ opt_apply (wrap_string "cmt") x.cmt
-               @@@ opt_apply (wrap_string "desc") x.desc
-               @@@ opt_apply (wrap_string "src") x.src
-               @@@ List.map xml_of_link x.link
-               @ opt_apply (wrap_int "number") x.number
-               @@@ opt_apply (wrap_string "type") x.typ
-               @@@ x.extensions
-               @@@ List.map xml_of_rtept x.rtept
-               @ [])
+    let bounds (x : bounds) : Xml.xml =
+      Xml.Element ("bounds",
+                   [ ("minlat", string_of_float x.minlat) ;
+                     ("minlon", string_of_float x.minlon) ;
+                     ("maxlat", string_of_float x.maxlat) ;
+                     ("maxlon", string_of_float x.maxlon) ; ],
+                   [])
 
-let xml_of_trk (x : trk) : Xml.xml =
-  Xml.Element ("trk",
-               [],
-               opt_apply (wrap_string "name") x.name
-               @@@ opt_apply (wrap_string "cmt") x.cmt
-               @@@ opt_apply (wrap_string "desc") x.desc
-               @@@ opt_apply (wrap_string "src") x.src
-               @@@ List.map xml_of_link x.link
-               @ opt_apply (wrap_int "number") x.number
-               @@@ opt_apply (wrap_string "type") x.typ
-               @@@ x.extensions
-               @@@ List.map xml_of_trkseg x.trkseg
-               @ [])
+    let copyright (x : copyright) : Xml.xml =
+      Xml.Element ("copyright",
+                   [("author", x.author)],
+                   opt_apply (wrap_int "year") x.year
+                   @@@ opt_apply (wrap_string "license") x.license
+                   @@@ [])
 
-let xml_of_metadata (x : metadata) : Xml.xml =
-  Xml.Element ("metadata",
-               [],
-               opt_apply (wrap_string "name") x.name
-               @@@ opt_apply (wrap_string "desc") x.desc
-               @@@ opt_apply xml_of_author x.author
-               @@@ opt_apply xml_of_copyright x.copyright
-               @@@ List.map xml_of_link x.link
-               @ opt_apply
-                   (fun x -> wrap_string "time" (string_of_date_time x)) x.time
-               @@@ opt_apply (wrap_string "keywords") x.keywords
-               @@@ opt_apply xml_of_bounds x.bounds
-               @@@ x.extensions
-               @@@ [])
+    let author (x : person) : Xml.xml =
+      Xml.Element ("author",
+                   [],
+                   opt_apply (wrap_string "name") x.name
+                   @@@ opt_apply email x.email
+                   @@@ opt_apply link x.link
+                   @@@ [])
 
-let xml_of_gpx x =
-  Xml.Element ("gpx",
-               [("version", x.version);
-                ("creator", x.creator)],
-               opt_apply xml_of_metadata x.metadata
-               @@@ List.map xml_of_wpt x.wpt
-               @ List.map xml_of_rte x.rte
-               @ List.map xml_of_trk x.trk
-               @ x.extensions
-               @@@ [])
+    let rte (x : rte) : Xml.xml =
+      Xml.Element ("rte",
+                   [],
+                   opt_apply (wrap_string "name") x.name
+                   @@@ opt_apply (wrap_string "cmt") x.cmt
+                   @@@ opt_apply (wrap_string "desc") x.desc
+                   @@@ opt_apply (wrap_string "src") x.src
+                   @@@ List.map link x.link
+                   @ opt_apply (wrap_int "number") x.number
+                   @@@ opt_apply (wrap_string "type") x.typ
+                   @@@ x.extensions
+                   @@@ List.map rtept x.rtept
+                   @ [])
 
-let to_xml = xml_of_gpx
+    let trk (x : trk) : Xml.xml =
+      Xml.Element ("trk",
+                   [],
+                   opt_apply (wrap_string "name") x.name
+                   @@@ opt_apply (wrap_string "cmt") x.cmt
+                   @@@ opt_apply (wrap_string "desc") x.desc
+                   @@@ opt_apply (wrap_string "src") x.src
+                   @@@ List.map link x.link
+                   @ opt_apply (wrap_int "number") x.number
+                   @@@ opt_apply (wrap_string "type") x.typ
+                   @@@ x.extensions
+                   @@@ List.map trkseg x.trkseg
+                   @ [])
+
+    let metadata (x : metadata) : Xml.xml =
+      Xml.Element ("metadata",
+                   [],
+                   opt_apply (wrap_string "name") x.name
+                   @@@ opt_apply (wrap_string "desc") x.desc
+                   @@@ opt_apply author x.author
+                   @@@ opt_apply copyright x.copyright
+                   @@@ List.map link x.link
+                   @ opt_apply
+                       (fun x -> wrap_string "time" (string_of_date_time x))
+                       x.time
+                   @@@ opt_apply (wrap_string "keywords") x.keywords
+                   @@@ opt_apply bounds x.bounds
+                   @@@ x.extensions
+                   @@@ [])
+
+    let gpx x =
+      Xml.Element ("gpx",
+                   [("version", x.version);
+                    ("creator", x.creator)],
+                   opt_apply metadata x.metadata
+                   @@@ List.map wpt x.wpt
+                   @ List.map rte x.rte
+                   @ List.map trk x.trk
+                   @ x.extensions
+                   @@@ [])
+end
+
+let of_xml = Of_XML.gpx
+let to_xml = To_XML.gpx

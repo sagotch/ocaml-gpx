@@ -130,3 +130,23 @@ type gpx = {
 
 val of_xml : Xml.xml -> gpx
 val to_xml : gpx -> Xml.xml
+
+module Of_XML : sig
+    val gpx : Xml.xml -> gpx
+    val rte : Xml.xml -> rte
+    val rtept : Xml.xml -> wpt
+    val trk : Xml.xml -> trk
+    val trkpt : Xml.xml -> wpt
+    val trkseg : Xml.xml -> trkseg
+    val wpt : Xml.xml -> wpt
+  end
+
+module To_XML : sig
+    val gpx : gpx -> Xml.xml
+    val rte : rte -> Xml.xml
+    val rtept : wpt -> Xml.xml
+    val trk : trk -> Xml.xml
+    val trkpt : wpt -> Xml.xml
+    val trkseg : trkseg -> Xml.xml
+    val wpt : wpt -> Xml.xml
+end

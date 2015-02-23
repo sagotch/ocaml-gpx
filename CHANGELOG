@@ -1,0 +1,20 @@
+# CHANGELOG
+
+## 1.0.3
+
+- Used ISO8601 library for datetime (represented as float).
+- Implemented missing `xml_of_email` function.
+- Exposed more functions for some gpx subelements.
+  See `Of_XML` and `To_XML` modules.
+
+## 1.0.2
+
+- Fixed `time_of_string` bug.
+
+## 1.0.1
+
+- Fixed datetime parsing.
+
+## 1.0.0
+
+- `to_xml` and `of_xml` functions.

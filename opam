@@ -2,7 +2,7 @@ opam-version: "1.2"
 
 maintainer: "Julien Sagot <ju.sagot@gmail.com>"
 
-author: "Julien Sagot <ju.sagot@gmail.com>"
+authors: [ "Julien Sagot <ju.sagot@gmail.com>" ]
 
 name: "gpx"
 

@@ -6,7 +6,7 @@ CAMLOPT   =$(OCAMLFIND) ocamlopt $(FLAGS)
 LIBNAME   =gpx
 LIBFILES  =gpx.cmi gpx.cma gpx.cmxa gpx.a
 
-VERSION   =1.1.0
+VERSION   =1.1.1
 
 DOCDIR    =doc
 

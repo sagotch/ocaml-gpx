@@ -277,7 +277,9 @@ module To_XML = struct
       | FIX_pps  -> "pps"
 
     let string_of_date_time (x : date_time) : string =
-      ISO8601.Permissive.string_of_datetime ~tz:(snd x) (fst x)
+      match snd x with
+      | Some t -> ISO8601.Permissive.string_of_datetimezone (fst x, t)
+      | None -> ISO8601.Permissive.string_of_datetime (fst x)
 
     let wrap_int = fun tag int ->
       Xml.Element (tag, [], [Xml.PCData (string_of_int int)])

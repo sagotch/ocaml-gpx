@@ -155,6 +155,7 @@ module Of_XML = struct
       | "3d"   -> FIX_3d
       | "dgps" -> FIX_dgps
       | "pps"  -> FIX_pps
+      | _      -> raise (Invalid_argument "fix_of_string")
 
     let link xml = {
         href = attrib xml "href";
@@ -327,13 +328,15 @@ module To_XML = struct
                    @@@ x.extensions
                    @@@ [])
 
-    let rtept x =
-      let Xml.Element (_, attributes, children) = wpt x in
-      Xml.Element ("rtept", attributes, children)
+    let rtept x = match wpt x with
+      | Xml.Element (_, attributes, children) ->
+        Xml.Element ("rtept", attributes, children)
+      | _ -> assert false
 
-    let trkpt x =
-      let Xml.Element (_, attributes, children) = wpt x in
-      Xml.Element ("trkpt", attributes, children)
+    let trkpt x = match wpt x with
+      | Xml.Element (_, attributes, children) ->
+        Xml.Element ("trkpt", attributes, children)
+      | _ -> assert false
 
     let trkseg (x : trkseg) : Xml.xml =
       Xml.Element ("trkseg",

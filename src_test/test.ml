@@ -50,7 +50,7 @@ let make_test filename =
     Alcotest.(check gpx) "same" data data)
 
 let tests =
-  gpxs "./src_test/"
+  gpxs "."
   |> List.map make_test
 
 let () =

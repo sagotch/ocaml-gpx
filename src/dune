@@ -1,0 +1,4 @@
+(library
+ (public_name gpx)
+ (flags (:standard -w -30-16))
+ (libraries xml-light ISO8601))

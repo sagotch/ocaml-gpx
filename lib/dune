@@ -1,0 +1,9 @@
+(env
+ (dev
+  (flags
+   (:standard -w -8))))
+
+(library
+ (package gpx)
+ (name gpx)
+ (libraries ISO8601 xml-light))

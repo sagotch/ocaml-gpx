@@ -1,5 +1,0 @@
-version         = "1.1.1"
-description     = "OCaml type for GPX representation, parser and printer."
-requires        = "ISO8601 xml-light"
-archive(byte)   = "gpx.cma"
-archive(native) = "gpx.cmxa"

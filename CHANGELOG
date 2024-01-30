@@ -1,6 +1,14 @@
 # CHANGELOG
 
-## 1.0.3
+## 1.1.2
+
+- Use `dune` build system
+
+## 1.1.1
+
+- Adapt to changes in ISO8601 API
+
+## 1.1.0
 
 - Used ISO8601 library for datetime (represented as float).
 - Implemented missing `xml_of_email` function.

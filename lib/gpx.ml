@@ -120,6 +120,7 @@ module Of_XML = struct
     | "3d" -> FIX_3d
     | "dgps" -> FIX_dgps
     | "pps" -> FIX_pps
+    | _ -> raise (Invalid_argument "fix_of_string")
 
   let link xml =
     {
@@ -271,9 +272,9 @@ module To_XML = struct
         @@@ opt_apply (wrap_string "type") x.typ
         @@@ [] )
 
-  let wpt (x : wpt) : Xml.xml =
+  let pt (tag : string) (x : wpt) : Xml.xml =
     Xml.Element
-      ( "wpt",
+      ( tag,
         [ ("lat", string_of_float x.lat); ("lon", string_of_float x.lon) ],
         opt_apply (fun x -> wrap_string "time" (string_of_date_time x)) x.time
         @@@ opt_apply (wrap_float "ele") x.ele
@@ -295,13 +296,9 @@ module To_XML = struct
         @@@ opt_apply (wrap_int "dgpsid") x.dgpsid
         @@@ x.extensions @@@ [] )
 
-  let rtept x =
-    let (Xml.Element (_, attributes, children)) = wpt x in
-    Xml.Element ("rtept", attributes, children)
-
-  let trkpt x =
-    let (Xml.Element (_, attributes, children)) = wpt x in
-    Xml.Element ("trkpt", attributes, children)
+  let wpt = pt "wpt"
+  let rtept = pt "rtept"
+  let trkpt = pt "trkpt"
 
   let trkseg (x : trkseg) : Xml.xml =
     Xml.Element ("trkseg", [], List.map trkpt x.trkpt @ x.extensions @@@ [])
